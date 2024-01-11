@@ -141,6 +141,9 @@ def recursive_execute(server, prompt, outputs, current_item, extra_data, execute
 
     input_data_all = None
     try:
+        import time
+        execution_start_time = time.perf_counter()
+        
         input_data_all = get_input_data(inputs, class_def, unique_id, outputs, prompt, extra_data)
         if server.client_id is not None:
             server.last_node_id = unique_id
@@ -153,6 +156,11 @@ def recursive_execute(server, prompt, outputs, current_item, extra_data, execute
 
         output_data, output_ui = get_output_data(obj, input_data_all)
         outputs[unique_id] = output_data
+        
+        current_time = time.perf_counter()
+        execution_time = current_time - execution_start_time
+        print("[Node{}-{}]: executed in {:.2f} seconds".format(unique_id, class_def.__name__, execution_time))
+        
         if len(output_ui) > 0:
             outputs_ui[unique_id] = output_ui
             if server.client_id is not None:
