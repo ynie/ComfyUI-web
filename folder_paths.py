@@ -109,7 +109,10 @@ def get_annotated_filepath(name, default_dir=None):
     return os.path.join(base_dir, name)
 
 
-def exists_annotated_filepath(name):
+def exists_annotated_filepath(name: str):
+    if name.startswith("https://"):
+        return True
+
     name, base_dir = annotated_filepath(name)
 
     if base_dir is None:

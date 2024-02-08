@@ -1,0 +1,1 @@
+PYTORCH_ENABLE_MPS_FALLBACK=1 python3 main.py --force-fp16 --preview-method auto
